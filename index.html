@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+  <head>
+    <meta charset="utf-8">
+    <title>Peticiones</title>
+
+  </head>
+  <body>
+    <h2> GET </h2>
+    <form action="https://enrv164b91we.x.pipedream.net/login" method="GET" id="formulario1" onsubmit="makeRequest(event)">
+      Nombre de usuario:
+      <br>
+      <input type="text" name="usuario">
+      <br>
+      Contraseña:
+      <br>
+      <input type="password" name="clave">
+      <br><br> 
+
+      <input type="submit" value="Iniciar Sesion ">
+    </form>
+    <div>
+      <button onclick="changeMethodType('get')">GET</button>
+      <button onclick="changeMethodType('post')">POST</button>
+      <button onclick="changeMethodType('put')">PUT</button>
+      <button onclick="changeMethodType('delete')">DELETE</button>
+      
+    </div>
+<br>
+<br>
+
+    </body>
+
+
+   <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function formularioEnviado(form) {
+      var user = form.querySelector('[name="usuario"]').value;
+      var pass = form.querySelector('[name="clave"]').value;
+
+      console.log(event);
+      $.ajax(
+        {
+          url : `https://enrv164b91we.x.pipedream.net/login?user=${user}&pass=${pass}`,
+          type : "GET"
+        }
+      );
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     function formularioPost(user,pass) {
+    
+
+      console.log(event);
+      $.ajax(
+        {
+          url : `https://enrv164b91we.x.pipedream.net/register`,
+          type : "POST",
+          data : {"user":user,
+                  "pass":pass},
+                  
+        }
+      );
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ function formularioDelete(user) {
+    
+
+      console.log(event);
+      $.ajax(
+        {
+          url : `https://enrv164b91we.x.pipedream.net/delete?user=${user}`,
+          type : "DELETE",
+                  
+        }
+      );
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function formularioDelete(user) {
+    
+
+      console.log(event);
+      $.ajax(
+        {
+          url : `https://enrv164b91we.x.pipedream.net/delete?user=${user}`,
+          type : "DELETE",
+                  
+        }
+      );
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function formularioPut(id,pass){
+
+
+      console.log(event);
+      $.ajax(
+        {
+          url : `https://enrv164b91we.x.pipedream.net/update`,
+          headers: {
+            "Content-Type": "application/json",
+            "nombre": "alan"
+          },
+          type : "PUT",
+          data : JSON.stringify({"user":id,"pass":pass})
+        }
+      );
+    }
+
+    function makeRequest(event) {
+      const method = event.target.getAttribute('method');
+      event.preventDefault();
+      
+switch (method) {
+        case 'get':
+          console.log('HACER PETICION GET');
+          var form = document.getElementById('formulario1');
+          formularioEnviado(form);
+        break;
+        
+        case 'post':
+          console.log('HACER PETICION POST');
+          var form = document.getElementById('formulario1');
+          var user = form.querySelector('[name="usuario"]').value;
+          var pass = form.querySelector('[name="clave"]').value;
+          formularioPost(user,pass);
+          break;
+
+        case 'put':
+          console.log('HACER PETICION PUT');
+          var form = document.getElementById('formulario1');
+          var id = form.querySelector('[name="usuario"]').value;
+          var pass = form.querySelector('[name="clave"]').value;
+          formularioPut(id,pass);
+          break;
+        case 'delete':
+        console.log('HACER PETICION DELETE');
+        var form = document.getElementById('formulario1');
+         var user = form.querySelector('[name="usuario"]').value;
+          formularioDelete(user);
+
+        break;
+
+
+         default:
+          console.log('NO SE QUECHINGADOS HACER');
+      }
+    }
+
+    let changeMethodType = (e) => document.getElementById('formulario1').method = e;
+</script>
+</html>
